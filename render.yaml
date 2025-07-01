@@ -3,9 +3,16 @@ services:
     name: kintai-system
     env: docker
     plan: free
-    buildCommand: ""
+buildCommand: |
+  touch database/database.sqlite
+  php artisan migrate --force
     startCommand: |
       cp /var/www/html/database/database.sqlite /tmp/database.sqlite
       php artisan migrate --force
       php artisan config:cache
       apache2-foreground
+startCommand: |
+  php artisan config:clear
+  php artisan route:clear
+  php artisan view:clear
+  php artisan serve --host=0.0.0.0 --port=10000
