@@ -4,11 +4,14 @@ services:
     env: docker
     plan: free
     buildCommand: |
-      touch laravel/database/database.sqlite
-    startCommand: |
-      chmod 666 laravel/database/database.sqlite
-      php artisan migrate --force
-      php artisan config:cache
-      php artisan serve --host=0.0.0.0 --port=10000
+      cd laravel
+      touch database/database.sqlite
+      chmod 666 database/database.sqlite
       chmod -R 775 storage bootstrap/cache
-
+      php artisan config:clear
+      php artisan route:clear
+      php artisan view:clear
+      php artisan migrate --force
+    startCommand: |
+      cd laravel
+      php artisan serve --host=0.0.0.0 --port=10000
