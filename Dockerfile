@@ -1,6 +1,6 @@
 FROM php:8.2-apache
 
-# 必要なパッケージのインストール
+# 必要なパッケージのインストール（curl を含める）
 RUN apt-get update && apt-get install -y \
     unzip \
     git \
