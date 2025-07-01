@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: kintai-system
+    env: docker
+    plan: free
+    buildCommand: ""
+    startCommand: |
+      cp /var/www/html/database/database.sqlite /tmp/database.sqlite
+      php artisan migrate --force
+      php artisan config:cache
+      apache2-foreground
