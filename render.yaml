@@ -4,10 +4,11 @@ services:
     env: docker
     plan: free
     buildCommand: |
-      # 必要な準備（composer installなどはDockerfileに任せるなら省略OK）
       touch laravel/database/database.sqlite
     startCommand: |
       chmod 666 laravel/database/database.sqlite
       php artisan migrate --force
       php artisan config:cache
       php artisan serve --host=0.0.0.0 --port=10000
+      chmod -R 775 storage bootstrap/cache
+
