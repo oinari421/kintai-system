@@ -28,4 +28,8 @@ RUN mkdir -p storage bootstrap/cache && \
 RUN if [ ! -f .env ]; then cp .env.example .env; fi
 
 EXPOSE 80
-CMD ["apache2-foreground"]
+CMD php artisan config:clear && \
+    php artisan config:cache && \
+    php artisan route:cache && \
+    php artisan key:generate && \
+    apache2-foreground
