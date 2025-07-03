@@ -27,8 +27,9 @@ WORKDIR /var/www
 # Laravelの依存パッケージをインストール
 RUN if [ -f composer.json ]; then composer install --no-dev --optimize-autoloader; fi
 
-# Laravelのストレージ・キャッシュディレクトリにパーミッション付与
-RUN chmod -R 775 storage bootstrap/cache
+# Laravelのパーミッション設定（ディレクトリが存在しない場合に備えて作成）
+RUN mkdir -p storage bootstrap/cache && \
+    chmod -R 775 storage bootstrap/cache
 
 EXPOSE 80
 CMD ["apache2-foreground"]
