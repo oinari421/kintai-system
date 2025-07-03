@@ -35,6 +35,7 @@ RUN mkdir -p storage bootstrap/cache && \
 RUN php artisan config:clear || true
 RUN php artisan config:cache || true
 RUN php artisan route:cache || true
+RUN php artisan key:generate
 
 EXPOSE 80
 CMD ["apache2-foreground"]
