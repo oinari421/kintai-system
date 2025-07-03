@@ -14,8 +14,9 @@
 /auth.json
 /node_modules
 # Vite build assets を追跡対象にする
-!public/build
-!public/build/*
+!public/build/
+!public/build/**
+
 
 /public/hot
 /public/storage
