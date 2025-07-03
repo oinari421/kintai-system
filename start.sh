@@ -37,3 +37,6 @@ php-fpm -D
 # Nginx 起動（フォアグラウンド）
 echo "🌐 Nginx 起動中..."
 nginx -g "daemon off;"
+
+npm install
+npm run build
