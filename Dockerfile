@@ -24,12 +24,17 @@ RUN curl -sS https://getcomposer.org/installer | php && \
 COPY . /var/www
 WORKDIR /var/www
 
-# Laravelの依存パッケージをインストール
-RUN if [ -f composer.json ]; then composer install --no-dev --optimize-autoloader; fi
+# Laravelの依存パッケージをインストール（失敗時はビルド中止）
+RUN if [ -f composer.json ]; then composer install --no-dev --optimize-autoloader; else echo "composer.json not found"; exit 1; fi
 
-# Laravelのパーミッション設定（ディレクトリが存在しない場合に備えて作成）
+# Laravelのパーミッション設定
 RUN mkdir -p storage bootstrap/cache && \
     chmod -R 775 storage bootstrap/cache
+
+# Laravelのキャッシュ系（失敗しても止めない）
+RUN php artisan config:clear || true
+RUN php artisan config:cache || true
+RUN php artisan route:cache || true
 
 EXPOSE 80
 CMD ["apache2-foreground"]
