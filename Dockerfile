@@ -26,6 +26,7 @@ RUN mkdir -p storage bootstrap/cache && \
     chown -R www-data:www-data storage bootstrap/cache && \
     chmod -R 775 storage bootstrap/cache
 
+
 # 環境ファイルを .env にコピー（ビルド中は必要）
 RUN if [ ! -f .env ]; then cp .env.example .env; fi
 
