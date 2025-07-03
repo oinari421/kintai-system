@@ -21,7 +21,9 @@ WORKDIR /var/www
 
 RUN if [ -f composer.json ]; then composer install --no-dev --optimize-autoloader; else echo "composer.json not found"; exit 1; fi
 
+# Laravelのパーミッション設定
 RUN mkdir -p storage bootstrap/cache && \
+    chown -R www-data:www-data storage bootstrap/cache && \
     chmod -R 775 storage bootstrap/cache
 
 # 環境ファイルを .env にコピー（ビルド中は必要）
