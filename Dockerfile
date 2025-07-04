@@ -41,9 +41,10 @@ RUN cp .env.example .env && \
     php artisan key:generate
 
 # Laravelのパーミッション設定
-RUN mkdir -p storage bootstrap/cache && \
+RUN mkdir -p storage/logs && \
     chown -R www-data:www-data storage bootstrap/cache && \
-    chmod -R 775 storage bootstrap/cache
+    chmod -R 775 storage bootstrap/cache storage/logs
+
 
 EXPOSE 80
 CMD tail -f storage/logs/laravel.log & apache2-foreground
