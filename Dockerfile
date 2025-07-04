@@ -19,25 +19,26 @@ RUN docker-php-ext-install pdo pdo_mysql zip mbstring
 RUN curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer
 
+# ...
 COPY . /var/www
 WORKDIR /var/www
 
-# SQLiteファイルの作成
-RUN touch database/database.sqlite && chmod 666 database/database.sqlite
+# Create SQLite file
+RUN touch database/database.sqlite \
+ && chmod 666 database/database.sqlite
 
-# Composer install
+# Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# .env作成・アプリキー生成・マイグレーション
-RUN cp laravel/.env.example laravel/.env
-    php artisan key:generate && \
-    php artisan migrate --force
+# Copy and generate .env, migrate
+RUN cp .env.example .env \
+ && php artisan key:generate \
+ && php artisan migrate --force
 
-# パーミッション・ログファイル
-RUN mkdir -p storage/logs && \
-    touch storage/logs/laravel.log && chmod 666 storage/logs/laravel.log && \
-    chown -R www-data:www-data storage bootstrap/cache && \
-    chmod -R 775 storage bootstrap/cache storage/logs
+# Set permissions and prepare logs
+RUN mkdir -p storage/logs \
+ && chown -R www-data:www-data storage bootstrap/cache \
+ && chmod -R 775 storage bootstrap/cache storage/logs
 
 EXPOSE 80
-CMD ["apache2-foreground"]
+CMD tail -f storage/logs/laravel.log & apache2-foreground
