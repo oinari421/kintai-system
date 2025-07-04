@@ -13,7 +13,9 @@ npm-debug.log
 yarn-error.log
 
 # SQLite DB
-!/database/database.sqlite
+- /database/*.sqlite
++ # /database/*.sqlite
+
 
 
 # IDE & System
