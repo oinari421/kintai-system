@@ -29,7 +29,7 @@ RUN touch database/database.sqlite && chmod 666 database/database.sqlite
 RUN composer install --no-dev --optimize-autoloader
 
 # .env作成・アプリキー生成・マイグレーション
-RUN cp .env.example .env && \
+RUN cp laravel/.env.example laravel/.env
     php artisan key:generate && \
     php artisan migrate --force
 
