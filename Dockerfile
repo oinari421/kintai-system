@@ -39,8 +39,7 @@ EXPOSE 80
 
 CMD bash -c " \
     if [ ! -f database/database.sqlite ]; then \
-        touch database/database.sqlite && \
-        chmod 666 database/database.sqlite; \
+        touch database/database.sqlite && chmod 666 database/database.sqlite; \
     fi && \
     php artisan migrate --force && \
     apache2-foreground"
