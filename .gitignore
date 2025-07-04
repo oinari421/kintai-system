@@ -31,3 +31,5 @@ yarn-error.log
 # Allow public/.htaccess to be committed
 !public/.htaccess
 
+/database/*.sqlite
+

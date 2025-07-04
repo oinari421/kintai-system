@@ -1,8 +1,16 @@
 services:
   - type: web
-    name: laravel-app
+    name: kintai-system
     env: docker
     plan: free
-    autoDeploy: true
-    buildCommand: ""
-    startCommand: ""
+    buildCommand: |
+      touch database/database.sqlite
+      chmod 666 database/database.sqlite
+      php artisan migrate --force
+      php artisan config:cache
+    startCommand: apache2-foreground
+    envVars:
+      - key: PORT
+        value: 10000
+    rootDir: laravel
+    autoDeploy: false
