@@ -30,6 +30,9 @@ RUN curl -sS https://getcomposer.org/installer | php && \
 COPY . /var/www
 WORKDIR /var/www
 
+# ⬇ 追加！SQLiteファイルの作成
+RUN touch database/database.sqlite && chmod 666 database/database.sqlite
+
 # Composer依存をインストール
 RUN composer install --no-dev --optimize-autoloader
 
