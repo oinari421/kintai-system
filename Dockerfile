@@ -23,8 +23,8 @@ RUN curl -sS https://getcomposer.org/installer | php && \
 COPY . /var/www
 WORKDIR /var/www
 
-RUN touch database/database.sqlite \
- && chmod 666 database/database.sqlite
+RUN touch database/database.sqlite && chmod 666 database/database.sqlite
+
 
 RUN composer install --no-dev --optimize-autoloader
 
