@@ -4,13 +4,16 @@ services:
     env: docker
     plan: free
     buildCommand: |
+      cd laravel
       touch database/database.sqlite
       chmod 666 database/database.sqlite
       php artisan migrate --force
       php artisan config:cache
-    startCommand: apache2-foreground
+    startCommand: |
+      cd laravel
+      apache2-foreground
     envVars:
       - key: PORT
         value: 10000
-    rootDir: laravel
+    rootDir: .
     autoDeploy: false
