@@ -4,13 +4,14 @@ services:
   app:
     build:
       context: .
-      dockerfile: ./docker/Dockerfile  # ← ②で作ったパス
+      dockerfile: Dockerfile
     container_name: laravel-app
     working_dir: /var/www
     volumes:
       - ./laravel:/var/www
     depends_on:
       - db
+
 
 
   web:
