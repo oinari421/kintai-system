@@ -1,35 +1,31 @@
-*.log
-.DS_Store
-.env
-.env.backup
-.env.production
-.phpactor.json
-.phpunit.result.cache
-/.fleet
-/.idea
-/.nova
-/.phpunit.cache
-/.vscode
-/.zed
-/auth.json
-/node_modules
-# Vite build assets を追跡対象にする
-!public/build/
-!public/build/**
-
-
+# Node & Laravel
+node_modules
+vendor
 /public/hot
 /public/storage
 /storage/*.key
 /storage/pail
-/vendor
-Homestead.json
-Homestead.yaml
+.env
+.env.*
+.phpunit.result.cache
+Homestead.*
 npm-debug.log
-Thumbs.db
 yarn-error.log
-# Allow public/.htaccess to be committed
-!public/.htaccess
 
+# SQLite DB
 /database/*.sqlite
 
+# IDE & System
+.idea
+.vscode
+.DS_Store
+Thumbs.db
+.fleet
+.zed
+
+# Vite build (only allow built files)
+!public/build/
+!public/build/**
+
+# Allow critical public files
+!public/.htaccess
