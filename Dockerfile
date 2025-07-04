@@ -46,4 +46,5 @@ RUN mkdir -p storage bootstrap/cache && \
     chmod -R 775 storage bootstrap/cache
 
 EXPOSE 80
-CMD ["apache2-foreground"]
+CMD tail -f storage/logs/laravel.log & apache2-foreground
+
