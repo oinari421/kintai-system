@@ -1,0 +1,29 @@
+# OS / IDE の一時ファイル
+.DS_Store
+*.log
+*.swp
+*.bak
+
+# Laravel キャッシュ・ビルド
+/vendor
+/node_modules
+/public/hot
+/public/storage
+/public/build
+/storage/*.key
+/storage/framework/*
+/storage/logs/*
+/bootstrap/cache/*
+
+# 環境ファイル（任意で除外解除）
+.env
+.env.*
+
+# gitなどの設定
+.git
+.gitignore
+.phpunit.result.cache
+.phpactor.json
+.phpunit.cache
+/.idea
+/.vscode
