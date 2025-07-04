@@ -23,22 +23,19 @@ RUN curl -sS https://getcomposer.org/installer | php && \
 COPY . /var/www
 WORKDIR /var/www
 
-# Create SQLite file
 RUN touch database/database.sqlite \
  && chmod 666 database/database.sqlite
 
-# Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Copy and generate .env, migrate
 RUN cp .env.example .env \
- && php artisan key:generate \
- && php artisan migrate --force
+ && php artisan key:generate
 
-# Set permissions and prepare logs
 RUN mkdir -p storage/logs \
  && chown -R www-data:www-data storage bootstrap/cache \
  && chmod -R 775 storage bootstrap/cache storage/logs
 
 EXPOSE 80
-CMD tail -f storage/logs/laravel.log & apache2-foreground
+
+# 起動時に migrate 実行（DB準備完了後）
+CMD php artisan migrate --force && apache2-foreground
