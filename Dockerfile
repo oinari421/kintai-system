@@ -37,5 +37,10 @@ RUN mkdir -p storage/logs \
 
 EXPOSE 80
 
-# 起動時に migrate 実行（DB準備完了後）
-CMD php artisan migrate --force && apache2-foreground
+CMD bash -c " \
+    if [ ! -f database/database.sqlite ]; then \
+        touch database/database.sqlite && \
+        chmod 666 database/database.sqlite; \
+    fi && \
+    php artisan migrate --force && \
+    apache2-foreground"
