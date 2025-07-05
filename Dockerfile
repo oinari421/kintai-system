@@ -52,5 +52,7 @@ CMD bash -c " \
         touch database/database.sqlite && chmod 666 database/database.sqlite; \
     fi && \
     php artisan migrate --force && \
+    tail -f storage/logs/laravel.log & \
     apache2-foreground"
+
 
