@@ -30,15 +30,16 @@ COPY . /var/www
 WORKDIR /var/www
 
 # SQLite 作成とパーミッション設定（修正済み）
+# database.sqlite のパーミッションと所有者を正しく設定
 RUN touch database/database.sqlite \
  && chmod 666 database/database.sqlite \
  && chown www-data:www-data database/database.sqlite
 
-# Laravel 標準の書き込みディレクトリ権限も再確認
-RUN touch storage/logs/laravel.log \
- && chown www-data:www-data storage/logs/laravel.log \
- && chmod -R 775 storage bootstrap/cache storage/logs
-
+# storage/logs/laravel.log を作成し所有者設定
+RUN mkdir -p storage/logs \
+ && touch storage/logs/laravel.log \
+ && chown -R www-data:www-data storage bootstrap/cache database \
+ && chmod -R 775 storage bootstrap/cache database
 
 RUN composer install --no-dev --optimize-autoloader
 
