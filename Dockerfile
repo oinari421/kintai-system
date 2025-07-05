@@ -46,8 +46,11 @@ RUN mkdir -p storage/logs \
 EXPOSE 80
 
 CMD bash -c " \
+    echo 'Checking database file...'; \
+    ls -l /var/www/database; \
     if [ ! -f database/database.sqlite ]; then \
         touch database/database.sqlite && chmod 666 database/database.sqlite; \
     fi && \
     php artisan migrate --force && \
     apache2-foreground"
+
