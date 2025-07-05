@@ -3,15 +3,9 @@ services:
     name: kintai-system
     env: docker
     plan: free
-    buildCommand: |
-      cd laravel
-      touch database/database.sqlite
-      chmod 666 database/database.sqlite
-      php artisan migrate --force
-      php artisan config:cache
-    startCommand: |
-      cd laravel
-      apache2-foreground
+    dockerfilePath: Dockerfile
+    buildCommand: ""
+    startCommand: ""
     envVars:
       - key: PORT
         value: 10000
