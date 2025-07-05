@@ -29,7 +29,16 @@ RUN curl -sS https://getcomposer.org/installer | php && \
 COPY . /var/www
 WORKDIR /var/www
 
-RUN touch database/database.sqlite && chmod 666 database/database.sqlite
+# SQLite 作成とパーミッション設定（修正済み）
+RUN touch database/database.sqlite \
+ && chmod 666 database/database.sqlite \
+ && chown www-data:www-data database/database.sqlite
+
+# Laravel 標準の書き込みディレクトリ権限も再確認
+RUN mkdir -p storage/logs \
+ && chown -R www-data:www-data storage bootstrap/cache \
+ && chmod -R 775 storage bootstrap/cache storage/logs
+
 
 RUN composer install --no-dev --optimize-autoloader
 
@@ -38,9 +47,6 @@ RUN cp .env.example .env \
  && sed -i 's|DB_DATABASE=.*|DB_DATABASE=/var/www/database/database.sqlite|' .env \
  && php artisan config:clear
 
-RUN mkdir -p storage/logs \
- && chown -R www-data:www-data storage bootstrap/cache \
- && chmod -R 775 storage bootstrap/cache storage/logs
 
 
 EXPOSE 80
