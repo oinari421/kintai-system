@@ -35,8 +35,8 @@ RUN touch database/database.sqlite \
  && chown www-data:www-data database/database.sqlite
 
 # Laravel 標準の書き込みディレクトリ権限も再確認
-RUN mkdir -p storage/logs \
- && chown -R www-data:www-data storage bootstrap/cache \
+RUN touch storage/logs/laravel.log \
+ && chown www-data:www-data storage/logs/laravel.log \
  && chmod -R 775 storage bootstrap/cache storage/logs
 
 
