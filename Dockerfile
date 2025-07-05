@@ -34,8 +34,11 @@ RUN touch database/database.sqlite && chmod 666 database/database.sqlite
 
 RUN composer install --no-dev --optimize-autoloader
 
+# .env を作成
 RUN cp .env.example .env \
- && php artisan key:generate
+ && php artisan key:generate \
+ && sed -i 's|DB_DATABASE=.*|DB_DATABASE=/var/www/database/database.sqlite|' .env
+
 
 RUN mkdir -p storage/logs \
  && chown -R www-data:www-data storage bootstrap/cache \
