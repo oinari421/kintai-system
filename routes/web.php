@@ -5,7 +5,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController; // ← これ追加！
 use App\Http\Middleware\AdminMiddleware;
 
-Route::get('/', fn() => 'Laravel is alive!');
+Route::get('/', function () {
+    return view('welcome');
+});
+
 
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
