@@ -12,25 +12,17 @@ RUN sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
 
 # 以下略...
 
-- RUN apt-get update && apt-get install -y \
--     unzip \
--     git \
--     libzip-dev \
--     zip \
--     libonig-dev \
--     curl
+RUN apt-get update && apt-get install -y \
+    unzip \
+    git \
+    libzip-dev \
+    zip \
+    libonig-dev \
+    curl \
+    libpq-dev
 
-+ RUN apt-get update && apt-get install -y \
-+     unzip \
-+     git \
-+     libzip-dev \
-+     zip \
-+     libonig-dev \
-+     curl \
-+     libpq-dev
+RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql pgsql zip mbstring
 
-- RUN docker-php-ext-install pdo pdo_mysql zip mbstring
-+ RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql pgsql zip mbstring
 
 
 RUN curl -sS https://getcomposer.org/installer | php && \
