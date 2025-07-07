@@ -2,8 +2,9 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\AdminController; // ← これ追加！
+use App\Http\Controllers\AdminController; 
 use App\Http\Middleware\AdminMiddleware;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,7 +25,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/clock-out', [AttendanceController::class, 'clockOut'])->name('attendance.clockOut');
 });
 
-// 👇ここが管理者用ルート（追加部分）
 
 // routes/web.php
 
@@ -39,7 +39,6 @@ Route::middleware(['auth', AdminMiddleware::class])->prefix('admin')->group(func
     Route::post('attendance/{attendance}/confirm', [AdminController::class, 'confirm'])->name('attendance.confirm');
 
     // ⬇ 更新処理（確認画面から送信）
-   // 正しく修正
 Route::put('attendance/{attendance}/update', [AdminController::class, 'update'])->name('attendance.update');
 });
 
