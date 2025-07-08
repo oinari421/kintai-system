@@ -3,11 +3,9 @@ services:
     name: kintai-system
     env: docker
     plan: free
-    dockerfilePath: Dockerfile
-    buildCommand: ""
-    startCommand: ""
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
     envVars:
       - key: PORT
-        value: 10000
-    rootDir: .
-    autoDeploy: false
+        value: 80
