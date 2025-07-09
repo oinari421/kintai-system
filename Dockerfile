@@ -30,18 +30,19 @@ RUN curl -sS https://getcomposer.org/installer | php && \
 COPY . /var/www
 WORKDIR /var/www
 
-# 権限設定
+# 本番用の .env をコピー（Render の環境変数で上書き前提）
+COPY .env.production .env
+
+# Laravel依存のインストールと初期処理
+RUN composer install --no-dev --optimize-autoloader \
+ && php artisan key:generate \
+ && php artisan config:clear
+
+# Laravel用のディレクトリの権限を設定
 RUN mkdir -p storage/logs \
  && touch storage/logs/laravel.log \
  && chown -R www-data:www-data storage bootstrap/cache \
  && chmod -R 775 storage bootstrap/cache
-
-# Composer依存をインストール（本番用）
-RUN composer install --no-dev --optimize-autoloader
-
-# .env は使わず、Renderの環境変数に任せる！
-RUN php artisan key:generate \
- && php artisan config:clear
 
 EXPOSE 80
 
