@@ -47,3 +47,15 @@ Route::put('attendance/{attendance}/update', [AdminController::class, 'update'])
 
 
 require __DIR__.'/auth.php';
+
+
+// ✅ デバッグ用（確認後削除してOK）
+Route::get('/debug-env', function () {
+    return response()->json([
+        'DB_CONNECTION' => env('DB_CONNECTION'),
+        'DB_HOST' => env('DB_HOST'),
+        'DB_DATABASE' => env('DB_DATABASE'),
+        'APP_ENV' => env('APP_ENV'),
+    ]);
+});
+
