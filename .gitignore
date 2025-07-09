@@ -5,8 +5,10 @@ vendor
 /public/storage
 /storage/*.key
 /storage/pail
-.env
-.env.*
+# .env*   ← コメントアウトまたは削除
+.env      # ← .env は無視するけど
+!.env.production  # ← .env.production は無視しない
+
 .phpunit.result.cache
 Homestead.*
 npm-debug.log
