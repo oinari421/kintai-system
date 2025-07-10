@@ -38,6 +38,7 @@ RUN mkdir -p storage/logs \
 EXPOSE 80
 
 CMD bash -c " \
-    php artisan migrate:fresh --seed --force && \
+    php artisan migrate --force && \
     tail -f storage/logs/laravel.log & \
     apache2-foreground"
+
