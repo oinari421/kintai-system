@@ -22,7 +22,7 @@
         <th class="px-4 py-2">メール</th>
         <th class="px-4 py-2">出勤</th>
         <th class="px-4 py-2">退勤</th>
-        <th class="px-4 py-2 text-center">操作</th> {{-- ← 編集・管理者ボタンをまとめて操作列に --}}
+        <th class="px-4 py-2">編集</th>
     </tr>
 </thead>
 <tbody>
