@@ -16,48 +16,47 @@
 </form>
 
                 <table class="w-full text-left">
-                    <thead>
+                  <thead>
     <tr>
-        <th>名前</th>
-        <th>メール</th>
-        <th>出勤</th>
-        <th>退勤</th>
-        <th>管理者</th>
-        <th>編集</th>
+        <th class="px-4 py-2">名前</th>
+        <th class="px-4 py-2">メール</th>
+        <th class="px-4 py-2">出勤</th>
+        <th class="px-4 py-2">退勤</th>
+        <th class="px-4 py-2 text-center">操作</th> {{-- ← 編集・管理者ボタンをまとめて操作列に --}}
     </tr>
 </thead>
 <tbody>
 @foreach ($users as $user)
-    <tr>
-        <td>{{ $user->name }}</td>
-        <td>{{ $user->email }}</td>
-        <td>
+    <tr class="border-t border-gray-300">
+        <td class="px-4 py-2">{{ $user->name }}</td>
+        <td class="px-4 py-2">{{ $user->email }}</td>
+        <td class="px-4 py-2 text-center">
             {{ $user->todayClockIn?->clock_in ? $user->todayClockIn->clock_in->format('H:i') : '-' }}
         </td>
-        <td>
+        <td class="px-4 py-2 text-center">
             {{ $user->todayClockIn?->clock_out ? $user->todayClockIn->clock_out->format('H:i') : '-' }}
         </td>
-        <td>
-            <div class="flex space-x-2">
-                {{-- 編集リンク --}}
+        <td class="px-4 py-2 text-center">
+            <div class="flex justify-center space-x-2">
+                {{-- 編集ボタン --}}
                 @if ($user->todayClockIn)
                     <a href="{{ route('attendance.edit', $user->todayClockIn->id) }}"
-                       class="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600">
+                       class="bg-blue-500 hover:bg-blue-600 text-white text-sm font-semibold px-3 py-1 rounded shadow">
                         編集
                     </a>
                 @endif
 
-                {{-- 管理者付与フォーム --}}
+                {{-- 管理者付与/表示 --}}
                 @if (!$user->is_admin)
                     <form method="POST" action="{{ route('admin.promote', $user->id) }}">
                         @csrf
                         <button type="submit"
-                            class="px-3 py-1 bg-green-500 text-white text-sm rounded hover:bg-green-600">
+                                class="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold px-3 py-1 rounded shadow">
                             管理者付与
                         </button>
                     </form>
                 @else
-                    <span class="px-3 py-1 bg-gray-300 text-sm text-gray-700 rounded">
+                    <span class="bg-gray-300 text-gray-800 text-sm font-semibold px-3 py-1 rounded shadow">
                         管理者
                     </span>
                 @endif
