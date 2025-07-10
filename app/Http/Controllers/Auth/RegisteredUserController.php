@@ -27,26 +27,25 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
-    {
+   public function store(Request $request): RedirectResponse
+{
     $request->validate([
         'name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
         'password' => ['required', 'confirmed', Rules\Password::defaults()],
     ]);
 
-    // ✅ 追加：最初のユーザーかどうかを判定
+    // 最初のユーザーだけ管理者にする
     $isFirstUser = User::count() === 0;
 
     $user = User::create([
         'name' => $request->name,
-        'email' => $request->email,
+        'email' => strtolower($request->email),
         'password' => Hash::make($request->password),
-        'is_admin' => $isFirstUser, // ✅ 管理者フラグ
+        'is_admin' => $isFirstUser, // ここでセット！
     ]);
 
     event(new Registered($user));
-
     Auth::login($user);
 
     return redirect(route('dashboard', absolute: false));
