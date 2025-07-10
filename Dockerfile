@@ -38,6 +38,10 @@ RUN composer install --no-dev --optimize-autoloader \
  && php artisan key:generate \
  && php artisan config:clear
 
+# ここから追記！🔽 （ユーザー全削除）
+RUN php artisan migrate:fresh --force \
+ && php artisan db:seed --force || true
+
 # Laravel用のディレクトリの権限を設定
 RUN mkdir -p storage/logs \
  && touch storage/logs/laravel.log \
