@@ -26,6 +26,9 @@ WORKDIR /var/www
 
 COPY .env.production .env
 
+RUN composer require fakerphp/faker --no-dev
+
+
 RUN composer install --no-dev --optimize-autoloader \
  && php artisan config:clear \
  && php artisan config:cache
