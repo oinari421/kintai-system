@@ -22,12 +22,10 @@
         <th>メール</th>
         <th>出勤</th>
         <th>退勤</th>
-        <th>編集</th> {{-- ← ここを追加！ --}}
-        <button type="submit" class="text-blue-600 hover:underline">管理者付与</button>
+        <th>操作</th> {{-- ← 編集と管理者付与の両方をこの列に集約 --}}
     </tr>
 </thead>
-
-  <tbody>
+<tbody>
 @foreach ($users as $user)
     <tr>
         <td>{{ $user->name }}</td>
@@ -38,16 +36,32 @@
         <td>
             {{ $user->todayClockIn?->clock_out ? $user->todayClockIn->clock_out->format('H:i') : '-' }}
         </td>
-        <td> {{-- ← 編集列のセル開始 --}}
-            @if ($user->todayClockIn)
-                <a href="{{ route('attendance.edit', $user->todayClockIn->id) }}"
-                   class="text-blue-600 underline hover:text-blue-800">
-                    編集
-                </a>
-            @else
-                -
-            @endif
-        </td> {{-- 編集列のセル終了 --}}
+        <td>
+            <div class="flex space-x-2">
+                {{-- 編集リンク --}}
+                @if ($user->todayClockIn)
+                    <a href="{{ route('attendance.edit', $user->todayClockIn->id) }}"
+                       class="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600">
+                        編集
+                    </a>
+                @endif
+
+                {{-- 管理者付与フォーム --}}
+                @if (!$user->is_admin)
+                    <form method="POST" action="{{ route('admin.promote', $user->id) }}">
+                        @csrf
+                        <button type="submit"
+                            class="px-3 py-1 bg-green-500 text-white text-sm rounded hover:bg-green-600">
+                            管理者付与
+                        </button>
+                    </form>
+                @else
+                    <span class="px-3 py-1 bg-gray-300 text-sm text-gray-700 rounded">
+                        管理者
+                    </span>
+                @endif
+            </div>
+        </td>
     </tr>
 @endforeach
 </tbody>
