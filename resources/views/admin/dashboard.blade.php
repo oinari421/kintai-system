@@ -23,6 +23,7 @@
         <th>出勤</th>
         <th>退勤</th>
         <th>編集</th> {{-- ← ここを追加！ --}}
+        <button type="submit" class="text-blue-600 hover:underline">管理者付与</button>
     </tr>
 </thead>
 

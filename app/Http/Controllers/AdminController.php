@@ -76,4 +76,13 @@ class AdminController extends Controller
 
         return redirect()->route('admin.dashboard')->with('message', $message);
     }
+public function promoteToAdmin($id)
+{
+    $user = User::findOrFail($id);
+    $user->is_admin = true;
+    $user->save();
+
+    return redirect()->back()->with('success', '管理者権限を付与しました');
+}
+
 }
