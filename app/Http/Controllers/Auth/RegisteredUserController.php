@@ -35,15 +35,19 @@ class RegisteredUserController extends Controller
         'password' => ['required', 'confirmed', Rules\Password::defaults()],
     ]);
 
-    // 最初のユーザーだけ管理者にする
-    $isFirstUser = User::count() === 0;
-
+    // ユーザー登録
     $user = User::create([
         'name' => $request->name,
         'email' => strtolower($request->email),
         'password' => Hash::make($request->password),
-        'is_admin' => $isFirstUser, // ここでセット！
     ]);
+
+    // 👇 idが最小のユーザー（最初に登録された）なら管理者に昇格
+    $firstUser = User::orderBy('id')->first();
+    if ($user->id === $firstUser->id) {
+        $user->is_admin = true;
+        $user->save();
+    }
 
     event(new Registered($user));
     Auth::login($user);
