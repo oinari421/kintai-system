@@ -39,10 +39,10 @@ Route::middleware(['auth', AdminMiddleware::class])->prefix('admin')->group(func
     Route::post('attendance/{attendance}/confirm', [AdminController::class, 'confirm'])->name('attendance.confirm');
 
     // ⬇ 更新処理（確認画面から送信）
-　　Route::put('attendance/{attendance}/update', [AdminController::class, 'update'])->name('attendance.update');
+    Route::put('attendance/{attendance}/update', [AdminController::class, 'update'])->name('attendance.update');
 
  // routes/web.php
-　　Route::patch('/admin/{id}/toggle', [AdminController::class, 'toggleAdmin'])->name('admin.toggle');
+    Route::patch('/admin/{id}/toggle', [AdminController::class, 'toggleAdmin'])->name('admin.toggle');
 
 });
 
