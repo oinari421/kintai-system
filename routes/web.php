@@ -41,7 +41,8 @@ Route::middleware(['auth', AdminMiddleware::class])->prefix('admin')->group(func
     // ⬇ 更新処理（確認画面から送信）
 Route::put('attendance/{attendance}/update', [AdminController::class, 'update'])->name('attendance.update');
 
- Route::patch('/admin/{id}/toggle', [AdminController::class, 'toggleAdmin'])->name('admin.toggle');
+ // routes/web.php
+Route::patch('/admin/{user}/toggle', [AdminController::class, 'toggleAdmin'])->name('admin.toggle');
 
 });
 
