@@ -23,7 +23,8 @@
                             <th class="px-4 py-2">出勤</th>
                             <th class="px-4 py-2">退勤</th>
                             <th class="px-4 py-2 text-center">編集</th>
-                            <th class="px-4 py-2 text-center">管理者</th>
+                            <th class="px-4 py-2 text-center">権限</th>
+                            <th class="px-4 py-2 text-center">管理者付与</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -82,7 +83,7 @@
                 @method('PATCH')
                 <button type="submit"
                     class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded shadow">
-                    実行する
+                    変更する
                 </button>
             </form>
         </div>
