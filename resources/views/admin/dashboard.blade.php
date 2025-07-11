@@ -59,8 +59,10 @@
 <td class="px-4 py-2 text-center">
     {{-- 管理者変更ボタン --}}
     <button onclick="openModal('{{ $user->id }}', '{{ $user->name }}', {{ $user->is_admin ? 'true' : 'false' }})"
-        class="bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-semibold px-3 py-1 rounded shadow">
-        管理者変更
+    class="bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-semibold px-3 py-1 rounded shadow border border-black">
+    管理者変更
+</button>
+
     </button>
 </td>
 
