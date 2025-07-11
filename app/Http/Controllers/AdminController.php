@@ -79,11 +79,13 @@ class AdminController extends Controller
 // AdminController.php
 
 // App\Http\Controllers\AdminController.php
-public function toggleAdmin(User $user)
+public function toggleAdmin($id)
 {
-    $user->is_admin = !$user->is_admin;
+    $user = User::findOrFail($id);
+    $user->is_admin = !$user->is_admin; // true ⇔ false を切り替える
     $user->save();
-    return redirect()->back()->with('message', '管理者権限を更新しました');
+
+    return redirect()->route('admin.dashboard')->with('success', '管理者権限を更新しました');
 }
 
 
