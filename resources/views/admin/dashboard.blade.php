@@ -61,24 +61,33 @@
         </div>
     </div>
 
-    <!-- モーダル部分 -->
-    <div id="adminModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-6 w-full max-w-md">
-            <h2 class="text-lg font-bold mb-4 text-gray-800 dark:text-gray-100">🔒 管理者権限の変更確認</h2>
-            <p id="adminModalMessage" class="mb-4 text-gray-700 dark:text-gray-200"></p>
+    <!-- モーダル -->
+<div id="adminModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white dark:bg-gray-700 rounded-lg p-6 w-full max-w-md shadow-lg">
+        <h3 class="text-lg font-bold mb-4 flex items-center">
+            <span class="mr-2">🔒</span> 管理者権限の変更確認
+        </h3>
+        <p id="adminModalMessage" class="mb-6 text-sm text-gray-800 dark:text-gray-100">
+            ユーザーの管理者権限を変更しますか？
+        </p>
 
-            <form id="adminModalForm" method="POST">
+        <div class="flex justify-center gap-4">
+            <button onclick="closeModal()"
+                class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded shadow">
+                キャンセル
+            </button>
+
+            <form id="adminModalForm" method="POST" action="">
                 @csrf
                 @method('PATCH')
-                <div class="flex justify-end space-x-2">
-                    <button type="button" onclick="closeModal()"
-                            class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded">キャンセル</button>
-                    <button type="submit"
-                            class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">実行</button>
-                </div>
+                <button type="submit"
+                    class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded shadow">
+                    実行する
+                </button>
             </form>
         </div>
     </div>
+</div>
 
     <!-- JavaScript -->
     <script>
