@@ -30,9 +30,10 @@ COPY .env.production .env
 
 
 
-RUN composer install --no-dev --optimize-autoloader \
- && php artisan config:clear \
- && php artisan config:cache
+RUN composer install --no-dev --optimize-autoloader --no-scripts \
+    && php artisan config:clear \
+    && php artisan config:cache
+
 
 RUN mkdir -p storage/logs \
  && touch storage/logs/laravel.log \
