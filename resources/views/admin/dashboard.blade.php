@@ -49,11 +49,21 @@
                                     @endif
                                 </td>
                                 <td class="px-4 py-2 text-center">
-                                    <button onclick="openModal('{{ $user->id }}', '{{ $user->name }}', {{ $user->is_admin ? 'true' : 'false' }})"
-                                            class="bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-semibold px-3 py-1 rounded shadow">
-                                        管理者変更
-                                    </button>
-                                </td>
+    {{-- 管理者か一般かを表示 --}}
+    <span class="inline-block px-2 py-1 rounded-full text-sm font-semibold
+        {{ $user->is_admin ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-800' }}">
+        {{ $user->is_admin ? '管理者' : '一般' }}
+    </span>
+</td>
+
+<td class="px-4 py-2 text-center">
+    {{-- 管理者変更ボタン --}}
+    <button onclick="openModal('{{ $user->id }}', '{{ $user->name }}', {{ $user->is_admin ? 'true' : 'false' }})"
+        class="bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-semibold px-3 py-1 rounded shadow">
+        管理者変更
+    </button>
+</td>
+
                             </tr>
                         @endforeach
                     </tbody>
