@@ -26,7 +26,7 @@ WORKDIR /var/www
 
 COPY .env.production .env
 
-RUN composer require fakerphp/faker
+
 
 
 
