@@ -41,7 +41,7 @@ Route::middleware(['auth', AdminMiddleware::class])->prefix('admin')->group(func
     // ⬇ 更新処理（確認画面から送信）
 Route::put('attendance/{attendance}/update', [AdminController::class, 'update'])->name('attendance.update');
 
- Route::post('/promote/{id}', [AdminController::class, 'promoteToAdmin'])->name('admin.promote');
+ Route::patch('/admin/{id}/toggle', [AdminController::class, 'toggleAdmin'])->name('admin.toggle');
 
 });
 

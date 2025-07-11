@@ -76,13 +76,16 @@ class AdminController extends Controller
 
         return redirect()->route('admin.dashboard')->with('message', $message);
     }
-public function promoteToAdmin($id)
+// AdminController.php
+
+public function toggleAdmin($id)
 {
     $user = User::findOrFail($id);
-    $user->is_admin = true;
+    $user->is_admin = !$user->is_admin;
     $user->save();
 
-    return redirect()->back()->with('success', '管理者権限を付与しました');
+    return back()->with('message', $user->is_admin ? '管理者権限を付与しました。' : '管理者権限を解除しました。');
 }
+
 
 }

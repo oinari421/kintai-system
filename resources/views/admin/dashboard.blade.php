@@ -16,13 +16,14 @@
 </form>
 
                 <table class="w-full text-left">
-                  <thead>
+                <thead>
     <tr>
         <th class="px-4 py-2">名前</th>
         <th class="px-4 py-2">メール</th>
         <th class="px-4 py-2">出勤</th>
         <th class="px-4 py-2">退勤</th>
-        <th class="px-4 py-2">編集</th>
+        <th class="px-4 py-2 text-center">編集</th>
+        <th class="px-4 py-2 text-center">管理者</th>
     </tr>
 </thead>
 <tbody>
@@ -36,31 +37,30 @@
         <td class="px-4 py-2 text-center">
             {{ $user->todayClockIn?->clock_out ? $user->todayClockIn->clock_out->format('H:i') : '-' }}
         </td>
-        <td class="px-4 py-2 text-center">
-            <div class="flex justify-center space-x-2">
-                {{-- 編集ボタン --}}
-                @if ($user->todayClockIn)
-                    <a href="{{ route('attendance.edit', $user->todayClockIn->id) }}"
-                       class="bg-blue-500 hover:bg-blue-600 text-white text-sm font-semibold px-3 py-1 rounded shadow">
-                        編集
-                    </a>
-                @endif
 
-                {{-- 管理者付与/表示 --}}
-                @if (!$user->is_admin)
-                    <form method="POST" action="{{ route('admin.promote', $user->id) }}">
-                        @csrf
-                        <button type="submit"
-                                class="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold px-3 py-1 rounded shadow">
-                            管理者付与
-                        </button>
-                    </form>
-                @else
-                    <span class="bg-gray-300 text-gray-800 text-sm font-semibold px-3 py-1 rounded shadow">
-                        管理者
-                    </span>
-                @endif
-            </div>
+        {{-- 編集ボタン --}}
+        <td class="px-4 py-2 text-center">
+            @if ($user->todayClockIn)
+                <a href="{{ route('attendance.edit', $user->todayClockIn->id) }}"
+                   class="bg-blue-500 hover:bg-blue-600 text-white text-sm font-semibold px-3 py-1 rounded shadow">
+                    編集
+                </a>
+            @else
+                <span class="text-gray-400 text-sm">-</span>
+            @endif
+        </td>
+
+        {{-- 管理者付与／解除ボタン --}}
+        <td class="px-4 py-2 text-center">
+            <form method="POST" action="{{ route('admin.toggle', $user->id) }}">
+                @csrf
+                @method('PATCH')
+                <button type="submit"
+                        class="{{ $user->is_admin ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600' }}
+                               text-white text-sm font-semibold px-3 py-1 rounded shadow">
+                    {{ $user->is_admin ? '管理者解除' : '管理者付与' }}
+                </button>
+            </form>
         </td>
     </tr>
 @endforeach
