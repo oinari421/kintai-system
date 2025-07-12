@@ -12,7 +12,10 @@
                 <form method="GET" action="{{ route('admin.dashboard') }}" class="mb-4">
                     <label for="date">日付を選択:</label>
                     <input type="date" name="date" id="date" value="{{ request('date', $date ?? '') }}">
-                    <button type="submit">検索</button>
+                    <button>
+                    type="submit" class="bg-gray-500 text-white px-4 py-2 rounded">
+                    検索
+</button>
                 </form>
 
                 <table class="w-full text-left">
