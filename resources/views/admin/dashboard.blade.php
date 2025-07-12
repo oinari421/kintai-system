@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
+            <div class="bg-white  overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <h3 class="text-lg font-bold mb-4">ユーザー一覧</h3>
                 <form method="GET" action="{{ route('admin.dashboard') }}" class="mb-4">
                     <label for="date">日付を選択:</label>
@@ -59,10 +59,8 @@
 <td class="px-4 py-2 text-center">
     {{-- 管理者変更ボタン --}}
     <button onclick="openModal('{{ $user->id }}', '{{ $user->name }}', {{ $user->is_admin ? 'true' : 'false' }})"
-    class="bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-semibold px-3 py-1 rounded shadow border border-black">
+    type="submit" class="bg-gray-500 text-white px-4 py-2 rounded">
     管理者変更
-</button>
-
     </button>
 </td>
 

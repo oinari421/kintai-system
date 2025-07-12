@@ -15,7 +15,7 @@
                     @if (Auth::user()->is_admin)
                         <div class="mb-4">
                             <a href="{{ route('admin.dashboard') }}" class="text-blue-500 underline">
-                                🔒 管理者メニュー
+                                🔒 管理者用ボード
                             </a>
                         </div>
                     @endif
