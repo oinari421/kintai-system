@@ -4,103 +4,104 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Application Name
+    | アプリケーション名
     |--------------------------------------------------------------------------
     |
-    | This value is the name of your application, which will be used when the
-    | framework needs to place the application's name in a notification or
-    | other UI elements where an application name needs to be displayed.
+    | アプリケーションの名前を設定します。通知などUI要素に表示されます。
     |
     */
-
     'name' => env('APP_NAME', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------
-    | Application Environment
+    | アプリケーションの環境
     |--------------------------------------------------------------------------
     |
-    | This value determines the "environment" your application is currently
-    | running in. This may determine how you prefer to configure various
-    | services the application utilizes. Set this in your ".env" file.
+    | 現在のアプリケーションの実行環境を設定します（例：local, production）。
+    | サービスの設定の切り替えに使用されます。".env"ファイルで設定できます。
     |
     */
-
     'env' => env('APP_ENV', 'production'),
 
     /*
     |--------------------------------------------------------------------------
-    | Application Debug Mode
+    | デバッグモード
     |--------------------------------------------------------------------------
     |
-    | When your application is in debug mode, detailed error messages with
-    | stack traces will be shown on every error that occurs within your
-    | application. If disabled, a simple generic error page is shown.
+    | true の場合、エラー発生時に詳細なエラーメッセージとスタックトレースを表示します。
+    | false の場合は、汎用的なエラーページが表示されます。
     |
     */
-
     'debug' => (bool) env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
-    | Application URL
+    | アプリケーションのURL
     |--------------------------------------------------------------------------
     |
-    | This URL is used by the console to properly generate URLs when using
-    | the Artisan command line tool. You should set this to the root of
-    | the application so that it's available within Artisan commands.
+    | ArtisanコマンドなどでURL生成に使われます。アプリのルートURLを指定します。
     |
     */
-
     'url' => env('APP_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
-    | Application Timezone
+    | タイムゾーン
     |--------------------------------------------------------------------------
     |
-    | Here you may specify the default timezone for your application, which
-    | will be used by the PHP date and date-time functions. The timezone
-    | is set to "UTC" by default as it is suitable for most use cases.
+    | PHPの date/time 関数で使用されるデフォルトのタイムゾーンを設定します。
+    | デフォルトは "UTC" ですが、日本の場合は "Asia/Tokyo" に設定してください。
     |
     */
-
     'timezone' => 'Asia/Tokyo',
-
 
     /*
     |--------------------------------------------------------------------------
-    | Application Locale Configuration
+    | ロケール（言語）設定
     |--------------------------------------------------------------------------
     |
-    | The application locale determines the default locale that will be used
-    | by Laravel's translation / localization methods. This option can be
-    | set to any locale for which you plan to have translation strings.
+    | Laravelの翻訳サービスで使うデフォルトの言語を設定します。
+    | ja（日本語）など、翻訳ファイルが存在する言語に設定可能です。
     |
     */
-
     'locale' => env('APP_LOCALE', 'en'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | フォールバックロケール
+    |--------------------------------------------------------------------------
+    |
+    | 指定されたロケールの翻訳が見つからなかったときに使用する予備の言語設定です。
+    |
+    */
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Fakerのロケール
+    |--------------------------------------------------------------------------
+    |
+    | ダミーデータ生成ライブラリFakerが使用するロケールを指定します。
+    | 例：'ja_JP' にすると日本語データ（名前や住所など）を生成します。
+    |
+    */
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
 
     /*
     |--------------------------------------------------------------------------
-    | Encryption Key
+    | 暗号化キー
     |--------------------------------------------------------------------------
     |
-    | This key is utilized by Laravel's encryption services and should be set
-    | to a random, 32 character string to ensure that all encrypted values
-    | are secure. You should do this prior to deploying the application.
+    | Laravelの暗号化サービスで使用されるキーです。
+    | 32文字のランダムな文字列を使用してください。
     |
     */
-
     'cipher' => 'AES-256-CBC',
 
     'key' => env('APP_KEY'),
 
     'previous_keys' => [
+        // 古いキーもカンマ区切りで .env に設定できる
         ...array_filter(
             explode(',', env('APP_PREVIOUS_KEYS', ''))
         ),
@@ -108,17 +109,14 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Maintenance Mode Driver
+    | メンテナンスモードのドライバー
     |--------------------------------------------------------------------------
     |
-    | These configuration options determine the driver used to determine and
-    | manage Laravel's "maintenance mode" status. The "cache" driver will
-    | allow maintenance mode to be controlled across multiple machines.
-    |
-    | Supported drivers: "file", "cache"
+    | Laravelのメンテナンスモードを制御するための方法を指定します。
+    | "file" または "cache" を選択可能です。
+    | "cache" を使うと複数サーバー間でも共有管理が可能になります。
     |
     */
-
     'maintenance' => [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
