@@ -21,20 +21,21 @@ RUN docker-php-ext-install pdo pdo_pgsql pgsql zip mbstring
 RUN curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer
 
+# コードと環境ファイルのコピー
 COPY . /var/www
 WORKDIR /var/www
 COPY .env.production .env
 
-# Laravel に必要な権限を先に付与
-RUN mkdir -p storage/logs \
+# Laravel に必要なディレクトリ作成とパーミッション設定
+RUN mkdir -p storage/logs bootstrap/cache \
  && touch storage/logs/laravel.log \
  && chown -R www-data:www-data storage bootstrap/cache \
  && chmod -R 775 storage bootstrap/cache
 
-# Composer install と Laravel 設定
-RUN composer install --no-dev --optimize-autoloader --no-scripts \
- && php artisan config:clear \
- && php artisan config:cache
+# Laravel 設定まわり（artisan前に上記の準備が必要！）
+RUN composer install --no-dev --optimize-autoloader --no-scripts && \
+    php artisan config:clear && \
+    php artisan config:cache
 
 EXPOSE 80
 
