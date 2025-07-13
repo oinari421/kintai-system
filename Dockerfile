@@ -31,9 +31,8 @@ COPY .env.production .env
 
 
 RUN composer install --no-dev --optimize-autoloader --no-scripts \
-    && php artisan config:clear
-# 一時的に config:cache をコメントアウトして確認
-#    && php artisan config:cache
+    && php artisan config:clear \
+    && php artisan config:cache
 
 
 
