@@ -1,44 +1,35 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             出退勤の編集
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <form method="POST" action="{{ route('attendance.confirm', $attendance->id) }}">
-    @csrf
-
+                    @csrf
+                    <div class="mb-4">
+                        <label for="clock_in" class="block text-sm font-medium text-gray-700">出勤時間</label>
+                        <input type="datetime-local" name="clock_in" id="clock_in" value="{{ $attendance->clock_in ? $attendance->clock_in->format('Y-m-d\TH:i') : '' }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                    </div>
 
                     <div class="mb-4">
-    <label for="clock_in" class="block font-bold mb-1">出勤時間</label>
-    <input type="datetime-local" id="clock_in" name="clock_in"
-           value="{{ old('clock_in', $attendance->clock_in ? $attendance->clock_in->format('Y-m-d\TH:i') : '') }}"
-           class="w-full border rounded px-3 py-2">
-    @error('clock_in')
-        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-    @enderror
-</div>
+                        <label for="clock_out" class="block text-sm font-medium text-gray-700">退勤時間</label>
+                        <input type="datetime-local" name="clock_out" id="clock_out" value="{{ $attendance->clock_out ? $attendance->clock_out->format('Y-m-d\TH:i') : '' }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                    </div>
 
-<div class="mb-4">
-    <label for="clock_out" class="block font-bold mb-1">退勤時間</label>
-    <input type="datetime-local" id="clock_out" name="clock_out"
-           value="{{ old('clock_out', $attendance->clock_out ? $attendance->clock_out->format('Y-m-d\TH:i') : '') }}"
-           class="w-full border rounded px-3 py-2">
-    @error('clock_out')
-        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-    @enderror
-</div>
+                    <div class="flex items-center gap-4">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                            変更実行
+                        </button>
 
-
-               <button type="submit"
-    class="bg-blue-600 text-white text-lg px-6 py-3 rounded hover:bg-blue-700 border border-blue-800 mt-4">
-    ✅ 
-</button>
-
-
+                        <!-- ✅ 一覧に戻るボタン -->
+                        <a href="{{ route('admin.dashboard') }}" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded">
+                            一覧に戻る
+                        </a>
+                    </div>
                 </form>
             </div>
         </div>

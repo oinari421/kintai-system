@@ -7,15 +7,12 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white  overflow-hidden shadow-sm sm:rounded-lg p-6">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <h3 class="text-lg font-bold mb-4">ユーザー一覧</h3>
                 <form method="GET" action="{{ route('admin.dashboard') }}" class="mb-4">
                     <label for="date">日付を選択:</label>
                     <input type="date" name="date" id="date" value="{{ request('date', $date ?? '') }}">
-                    <button>
-                    type="submit" class="bg-gray-500 text-white px-4 py-2 rounded">
-                    検索
-</button>
+                    <button type="submit" class="bg-gray-500 text-white px-4 py-2 rounded">検索</button>
                 </form>
 
                 <table class="w-full text-left">
@@ -26,6 +23,7 @@
                             <th class="px-4 py-2">出勤</th>
                             <th class="px-4 py-2">退勤</th>
                             <th class="px-4 py-2 text-center">編集</th>
+                            <th class="px-4 py-2 text-center">編集履歴の有無</th>
                             <th class="px-4 py-2 text-center">権限</th>
                             <th class="px-4 py-2 text-center">管理者付与</th>
                         </tr>
@@ -52,21 +50,24 @@
                                     @endif
                                 </td>
                                 <td class="px-4 py-2 text-center">
-    {{-- 管理者か一般かを表示 --}}
-    <span class="inline-block px-2 py-1 rounded-full text-sm font-semibold
-        {{ $user->is_admin ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-800' }}">
-        {{ $user->is_admin ? '管理者' : '一般' }}
-    </span>
-</td>
-
-<td class="px-4 py-2 text-center">
-    {{-- 管理者変更ボタン --}}
-    <button onclick="openModal('{{ $user->id }}', '{{ $user->name }}', {{ $user->is_admin ? 'true' : 'false' }})"
-    type="submit" class="bg-gray-500 text-white px-4 py-2 rounded">
-    管理者変更
-    </button>
-</td>
-
+                                    @if ($user->todayClockIn && $user->todayClockIn->is_edited)
+                                        <span class="text-red-500 font-semibold">編集済</span>
+                                    @else
+                                        <span class="text-gray-400">-</span>
+                                    @endif
+                                </td>
+                                <td class="px-4 py-2 text-center">
+                                    <span class="inline-block px-2 py-1 rounded-full text-sm font-semibold
+                                        {{ $user->is_admin ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-800' }}">
+                                        {{ $user->is_admin ? '管理者' : '一般' }}
+                                    </span>
+                                </td>
+                                <td class="px-4 py-2 text-center">
+                                    <button onclick="openModal('{{ $user->id }}', '{{ $user->name }}', {{ $user->is_admin ? 'true' : 'false' }})"
+                                        type="button" class="bg-gray-500 text-white px-4 py-2 rounded">
+                                        管理者変更
+                                    </button>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -76,32 +77,32 @@
     </div>
 
     <!-- モーダル -->
-<div id="adminModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-    <div class="bg-white dark:bg-gray-700 rounded-lg p-6 w-full max-w-md shadow-lg">
-        <h3 class="text-lg font-bold mb-4 flex items-center">
-            <span class="mr-2">🔒</span> 管理者権限の変更確認
-        </h3>
-        <p id="adminModalMessage" class="mb-6 text-sm text-gray-800 dark:text-gray-100">
-            ユーザーの管理者権限を変更しますか？
-        </p>
+    <div id="adminModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white dark:bg-gray-700 rounded-lg p-6 w-full max-w-md shadow-lg">
+            <h3 class="text-lg font-bold mb-4 flex items-center">
+                <span class="mr-2">🔒</span> 管理者権限の変更確認
+            </h3>
+            <p id="adminModalMessage" class="mb-6 text-sm text-gray-800 dark:text-gray-100">
+                ユーザーの管理者権限を変更しますか？
+            </p>
 
-        <div class="flex justify-center gap-4">
-            <button onclick="closeModal()"
-                class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded shadow">
-                キャンセル
-            </button>
-
-            <form id="adminModalForm" method="POST" action="">
-                @csrf
-                @method('PATCH')
-                <button type="submit"
-                    class="bg-red-500 hover:bg-red-600 text-gray-800 font-bold py-2 px-4 rounded shadow">
-                    変更する
+            <div class="flex justify-center gap-4">
+                <button onclick="closeModal()"
+                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded shadow">
+                    キャンセル
                 </button>
-            </form>
+
+                <form id="adminModalForm" method="POST" action="">
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit"
+                        class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded shadow">
+                        変更する
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
     <!-- JavaScript -->
     <script>

@@ -50,32 +50,40 @@ class AdminController extends Controller
 }
 
 
-    // ✅ 更新処理（確認後の確定ボタンから来る）
-    public function update(Request $request, Attendance $attendance)
-    {
-        $request->validate([
-    'clock_in' => 'nullable|date',
-    'clock_out' => 'nullable|date',
-]);
+  public function update(Request $request, Attendance $attendance)
+{
+    $request->validate([
+        'clock_in' => 'nullable|date',
+        'clock_out' => 'nullable|date',
+    ]);
 
+    $beforeIn = $attendance->clock_in;
+    $beforeOut = $attendance->clock_out;
 
-        $beforeIn = $attendance->clock_in;
-        $beforeOut = $attendance->clock_out;
+    $attendance->clock_in = $request->clock_in;
+    $attendance->clock_out = $request->clock_out;
 
-        $attendance->clock_in = $request->clock_in;
-        $attendance->clock_out = $request->clock_out;
-        $attendance->save();
-
-        $message = "出退勤時間を更新しました。";
-        if ($beforeIn != $attendance->clock_in) {
-            $message .= " 出勤：" . \Carbon\Carbon::parse($beforeIn)->format('H:i') . " → " . \Carbon\Carbon::parse($attendance->clock_in)->format('H:i');
-        }
-        if ($beforeOut != $attendance->clock_out) {
-            $message .= " 退勤：" . \Carbon\Carbon::parse($beforeOut)->format('H:i') . " → " . \Carbon\Carbon::parse($attendance->clock_out)->format('H:i');
-        }
-
-        return redirect()->route('admin.dashboard')->with('message', $message);
+    // ✅ 時刻が変更された場合は is_edited を true にする
+    if (
+        $beforeIn != $attendance->clock_in ||
+        $beforeOut != $attendance->clock_out
+    ) {
+        $attendance->is_edited = true;
     }
+
+    $attendance->save();
+
+    $message = "出退勤時間を更新しました。";
+    if ($beforeIn != $attendance->clock_in) {
+        $message .= " 出勤：" . \Carbon\Carbon::parse($beforeIn)->format('H:i') . " → " . \Carbon\Carbon::parse($attendance->clock_in)->format('H:i');
+    }
+    if ($beforeOut != $attendance->clock_out) {
+        $message .= " 退勤：" . \Carbon\Carbon::parse($beforeOut)->format('H:i') . " → " . \Carbon\Carbon::parse($attendance->clock_out)->format('H:i');
+    }
+
+    return redirect()->route('admin.dashboard')->with('message', $message);
+}
+
 // AdminController.php
 
 // App\Http\Controllers\AdminController.php
