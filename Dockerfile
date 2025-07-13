@@ -23,23 +23,18 @@ RUN curl -sS https://getcomposer.org/installer | php && \
 
 COPY . /var/www
 WORKDIR /var/www
-
 COPY .env.production .env
 
-
-
-
-
-RUN composer install --no-dev --optimize-autoloader --no-scripts \
-    && php artisan config:clear \
-    && php artisan config:cache
-
-
-
+# Laravel に必要な権限を先に付与
 RUN mkdir -p storage/logs \
  && touch storage/logs/laravel.log \
  && chown -R www-data:www-data storage bootstrap/cache \
  && chmod -R 775 storage bootstrap/cache
+
+# Composer install と Laravel 設定
+RUN composer install --no-dev --optimize-autoloader --no-scripts \
+ && php artisan config:clear \
+ && php artisan config:cache
 
 EXPOSE 80
 
@@ -47,4 +42,3 @@ CMD bash -c " \
     php artisan migrate --force && \
     tail -f storage/logs/laravel.log & \
     apache2-foreground"
-
