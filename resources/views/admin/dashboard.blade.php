@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800  leading-tight">
             管理者ダッシュボード
         </h2>
     </x-slot>
@@ -78,26 +78,26 @@
 
     <!-- モーダル -->
     <div id="adminModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white dark:bg-gray-700 rounded-lg p-6 w-full max-w-md shadow-lg">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md shadow-lg">
             <h3 class="text-lg font-bold mb-4 flex items-center">
                 <span class="mr-2">🔒</span> 管理者権限の変更確認
             </h3>
-            <p id="adminModalMessage" class="mb-6 text-sm text-gray-800 dark:text-gray-100">
+            <p id="adminModalMessage" class="mb-6 text-sm text-gray-800 ">
                 ユーザーの管理者権限を変更しますか？
             </p>
 
             <div class="flex justify-center gap-4">
                 <button onclick="closeModal()"
                     class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded shadow">
-                    キャンセル
+                    いいえ
                 </button>
 
                 <form id="adminModalForm" method="POST" action="">
                     @csrf
                     @method('PATCH')
                     <button type="submit"
-                        class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded shadow">
-                        変更する
+                        class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded shadow">
+                        はい
                     </button>
                 </form>
             </div>
