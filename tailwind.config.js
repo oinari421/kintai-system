@@ -1,5 +1,5 @@
 export default {
-    darkMode: false, // これを追加！
+    darkMode: false, // ← これはOK。darkモード使わないならこれでOK
 
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',

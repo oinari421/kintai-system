@@ -29,7 +29,7 @@
                     <input type="hidden" name="clock_in" value="{{ $newClockIn }}">
                     <input type="hidden" name="clock_out" value="{{ $newClockOut }}">
 
-                    <x-primary-button class="bg-blue-600 hover:bg-blue-700 text-white">
+                    <x-primary-button class="bg-blue-600 hover:bg-blue-700 text-gray-800">
                         ✅ この内容で確定
                     </x-primary-button>
                 </form>

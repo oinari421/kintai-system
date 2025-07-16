@@ -1,10 +1,10 @@
 <section class="space-y-6">
     <header>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+        <h2 class="text-lg font-medium text-gray-900 ">
             アカウントの削除
         </h2>
 
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+        <p class="mt-1 text-sm text-gray-600 ">
             アカウントを削除すると、すべてのリソースとデータが完全に削除されます。削除前に必要なデータは必ずダウンロードしてください。
         </p>
     </header>
@@ -19,11 +19,11 @@
             @csrf
             @method('delete')
 
-            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+            <h2 class="text-lg font-medium text-gray-900 ">
                 本当にアカウントを削除しますか？
             </h2>
 
-            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+            <p class="mt-1 text-sm text-gray-600 ">
                 アカウントを削除すると、すべてのデータが完全に削除されます。削除を確定するには、パスワードを入力してください。
             </p>
 
